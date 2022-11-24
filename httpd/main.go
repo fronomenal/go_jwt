@@ -1,9 +1,8 @@
 package main
 
 import (
-	"fmt"
-
 	"github.com/fronomenal/go_jwt/httpd/inits"
+	"github.com/gin-gonic/gin"
 )
 
 func init() {
@@ -12,5 +11,11 @@ func init() {
 }
 
 func main() {
-	fmt.Println("project init")
+	r := gin.Default()
+	r.GET("/test", func(c *gin.Context) {
+		c.JSON(200, gin.H{
+			"status": "200", "message": "success",
+		})
+	})
+	r.Run()
 }
