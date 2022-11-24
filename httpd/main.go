@@ -8,6 +8,7 @@ import (
 
 func init() {
 	inits.SetupEnv()
+	_ = inits.Connect()
 }
 
 func main() {

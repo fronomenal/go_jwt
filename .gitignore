@@ -12,6 +12,7 @@
 *.out
 
 build/
+.vscode/
 
 # Go workspace file
 go.work
