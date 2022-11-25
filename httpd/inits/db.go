@@ -1,6 +1,7 @@
 package inits
 
 import (
+	"github.com/fronomenal/go_jwt/httpd/models"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
@@ -11,4 +12,8 @@ func Connect() (db *gorm.DB) {
 		panic("failed to connect database")
 	}
 	return
+}
+
+func Sync(db *gorm.DB) {
+	db.AutoMigrate(&models.User{})
 }
