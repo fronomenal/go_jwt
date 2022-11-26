@@ -36,11 +36,11 @@ func getToken(sub int64) (string, error) {
 	return tokenString, nil
 }
 
-type ResBody interface {
+type ResContent interface {
 	string | []UserResponse | map[string]interface{}
 }
 
-func respond[T ResBody](c *gin.Context, stat int, content T) {
+func respond[T ResContent](c *gin.Context, stat int, content T) {
 	switch stat {
 	case 200:
 		c.JSON(http.StatusOK, gin.H{"status": 200, "body": content})

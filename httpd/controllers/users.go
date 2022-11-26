@@ -35,7 +35,7 @@ func UsersController(handler string, db *gorm.DB) gin.HandlerFunc {
 
 	signup := func(c *gin.Context) {
 
-		reqBody := UserSerializer{}
+		reqBody := UserRequest{}
 
 		if c.Bind(&reqBody) != nil {
 			respond(c, 400, "Problem with request body")
@@ -66,7 +66,7 @@ func UsersController(handler string, db *gorm.DB) gin.HandlerFunc {
 	}
 
 	login := func(c *gin.Context) {
-		reqBody := UserSerializer{}
+		reqBody := UserRequest{}
 
 		if c.Bind(&reqBody) != nil {
 			respond(c, 400, "Problem with request body")
