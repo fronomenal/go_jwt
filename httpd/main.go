@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/fronomenal/go_jwt/httpd/controllers"
 	"github.com/fronomenal/go_jwt/httpd/inits"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
@@ -16,10 +17,8 @@ func init() {
 
 func main() {
 	r := gin.Default()
-	r.GET("/test", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"status": "200", "message": "success",
-		})
-	})
+	r.GET("user/", controllers.UsersController("index", DB))
+	r.POST("user/sign-up", controllers.UsersController("sign-up", DB))
+	r.POST("user/login", controllers.UsersController("login", DB))
 	r.Run()
 }
