@@ -98,7 +98,7 @@ func UsersController(handler string, db *gorm.DB) gin.HandlerFunc {
 		}
 
 		c.SetSameSite(http.SameSiteLaxMode)
-		c.SetCookie("Authorization", "bearer "+usrtoken, 3600*24*30, "", "", false, true)
+		c.SetCookie("Authorization", usrtoken, 3600*24*30, "", "", false, true)
 
 		respond(c, 200, usrtoken)
 
