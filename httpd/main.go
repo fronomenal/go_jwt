@@ -20,7 +20,7 @@ func main() {
 	r.GET("user/", controllers.UsersController("index", DB))
 	r.POST("user/sign-up", controllers.UsersController("sign-up", DB))
 	r.POST("user/login", controllers.UsersController("login", DB))
-	r.POST("user/log-out", controllers.AuthMiddleware(DB), controllers.UsersController("login", DB))
-	r.GET("secret/", controllers.AuthMiddleware(DB), controllers.SecretsController("index", DB))
+	r.POST("user/log-out", controllers.AuthMiddleware(DB), controllers.UsersController("log-out", DB))
+	r.GET("secret/", controllers.AuthMiddleware(DB), controllers.SecretsController("", DB))
 	r.Run()
 }
