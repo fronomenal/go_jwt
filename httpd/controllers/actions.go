@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 	"os"
 	"time"
@@ -34,6 +35,33 @@ func getToken(sub int64) (string, error) {
 	}
 
 	return tokenString, nil
+}
+
+func validateToken(tokenString string) (int64, bool) {
+	token, err := jwt.Parse(tokenString, func(t *jwt.Token) (interface{}, error) {
+		if _, ok := t.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, fmt.Errorf("Unexpected signing method: %v", t.Header["alg"])
+		}
+
+		return []byte(os.Getenv("SECRET")), nil
+	})
+
+	if err != nil {
+		return 0, false
+	}
+
+	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
+		if float64(time.Now().Unix()) > claims["exp"].(float64) {
+			return 0, false
+		}
+
+		payload := claims["sub"]
+
+		return payload.(int64), true
+
+	}
+
+	return 0, false
 }
 
 type ResContent interface {

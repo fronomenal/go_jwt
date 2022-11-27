@@ -104,8 +104,18 @@ func UsersController(handler string, db *gorm.DB) gin.HandlerFunc {
 
 	}
 
+	logout := func(c *gin.Context) {
+		user, _ := c.Get("user")
+
+		name := user.(models.User).Name
+
+		c.SetCookie("Authorization", "", 0, "", "", false, true)
+
+		respond(c, 500, "User "+name+" logged out")
+	}
+
 	defpage := func(c *gin.Context) {
-		c.JSON(http.StatusInternalServerError, gin.H{"status": 500, "message": "Route handler mismatch"})
+		respond(c, 500, "Route handler mismatch")
 	}
 
 	switch handler {
@@ -115,6 +125,8 @@ func UsersController(handler string, db *gorm.DB) gin.HandlerFunc {
 		return signup
 	case "login":
 		return login
+	case "log-out":
+		return logout
 	default:
 		return defpage
 	}
