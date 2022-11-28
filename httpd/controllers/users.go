@@ -105,13 +105,10 @@ func UsersController(handler string, db *gorm.DB) gin.HandlerFunc {
 	}
 
 	logout := func(c *gin.Context) {
-		user, _ := c.Get("user")
-
-		name := user.(models.User).Name
 
 		c.SetCookie("Authorization", "", 0, "", "", false, true)
 
-		respond(c, 500, "User "+name+" logged out")
+		respond(c, 500, "User logged out")
 	}
 
 	defpage := func(c *gin.Context) {
